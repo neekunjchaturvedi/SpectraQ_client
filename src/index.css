@@ -1,0 +1,605 @@
+/* Add Inter font */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@layer base {
+  :root {
+    /* Dark theme as default for SpectraQ */
+    --background: 222 47% 3%;
+    --foreground: 0 0% 95%;
+
+    --card: 222 47% 4%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 222 47% 4%;
+    --popover-foreground: 0 0% 95%;
+
+    /* Red primary theme */
+    --primary: 0 72% 51%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 0 72% 60%;
+
+    --secondary: 222 47% 8%;
+    --secondary-foreground: 0 0% 90%;
+
+    --muted: 222 47% 6%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 0 72% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 120 60% 50%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 222 47% 12%;
+    --input: 222 47% 8%;
+    --ring: 0 72% 51%;
+
+    --radius: 0.75rem;
+
+    /* Custom SpectraQ colors */
+    --quantum-red: 0 72% 51%;
+    --quantum-red-dark: 0 72% 35%;
+    --quantum-black: 222 47% 3%;
+    --quantum-gray: 222 47% 8%;
+    --quantum-gray-light: 222 47% 15%;
+    --quantum-orange: 24 90% 55%;
+    --quantum-blue: 210 100% 50%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(var(--quantum-red)),
+      hsl(var(--quantum-red-dark))
+    );
+    --gradient-secondary: linear-gradient(
+      135deg,
+      hsl(var(--quantum-black)),
+      hsl(var(--quantum-gray))
+    );
+    --gradient-card: linear-gradient(
+      145deg,
+      hsl(var(--card)),
+      hsl(var(--quantum-gray))
+    );
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(var(--quantum-black)) 0%,
+      hsl(var(--quantum-red)) 100%
+    );
+
+    /* Shadows */
+    --shadow-glow: 0 0 50px hsl(var(--quantum-red) / 0.3);
+    --shadow-card: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
+    --shadow-button: 0 5px 20px hsl(var(--quantum-red) / 0.4);
+
+    /* Animations */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Sidebar colors */
+    --sidebar-background: 222 47% 4%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 0 72% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 47% 8%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 222 47% 12%;
+    --sidebar-ring: 0 72% 51%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      sans-serif;
+  }
+
+  /* Global scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--quantum-black));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--quantum-gray));
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--quantum-gray-light));
+  }
+}
+
+@layer components {
+  /* Custom scrollbar for specific elements */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--quantum-red));
+    border-radius: calc(var(--radius) * 0.5);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--quantum-red-dark));
+  }
+
+  /* SpectraQ Custom Components */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-button {
+    box-shadow: var(--shadow-button);
+  }
+
+  /* Gradient text utilities */
+  .gradient-text-primary {
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Market card hover effects */
+  .market-card {
+    transition: var(--transition-smooth);
+  }
+
+  .market-card:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Glow effects */
+  .glow-red {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glow-text-red {
+    text-shadow: 0 0 20px hsl(var(--quantum-red) / 0.5);
+  }
+
+  /* Card with gradient background */
+  .quantum-card {
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card);
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius));
+    transition: var(--transition);
+  }
+
+  .quantum-card:hover {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Button variants */
+  .btn-quantum {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .quantum {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    font-weight: 600;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .btn-quantum:hover {
+    background-color: hsl(var(--primary) / 0.9);
+    box-shadow: var(--shadow-button);
+  }
+
+  .btn-quantum::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--quantum-red)) 0%,
+      hsl(var(--quantum-red-dark)) 100%
+    );
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-quantum:hover::after {
+    opacity: 1;
+  }
+
+  /* Primary button with gradient */
+  .btn-quantum-primary {
+    background: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-button);
+    border: none;
+    border-radius: calc(var(--radius) * 0.5);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: var(--transition);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-quantum-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .btn-quantum-primary:focus {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  .btn-outline-quantum {
+    border: 2px solid hsl(var(--primary));
+    color: hsl(var(--primary));
+    background-color: transparent;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: var(--transition-smooth);
+  }
+
+  .btn-outline-quantum:hover {
+    background-color: hsl(var(--primary) / 0.1);
+    box-shadow: var(--shadow-button);
+  }
+
+  /* Input with quantum styling */
+  .input-quantum {
+    background: hsl(var(--input));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
+    border-radius: calc(var(--radius) * 0.5);
+    padding: 0.5rem 0.75rem;
+    transition: var(--transition);
+    width: 100%;
+  }
+
+  .input-quantum:focus {
+    outline: none;
+    border-color: hsl(var(--quantum-red));
+    box-shadow: 0 0 0 2px hsl(var(--quantum-red) / 0.2);
+  }
+
+  .input-quantum::placeholder {
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Loading animations */
+  .pulse-border {
+    animation: pulse-border 2s infinite;
+  }
+
+  /* Glow text effect */
+  .glow-text {
+    text-shadow: 0 0 10px hsla(var(--primary), 0.7);
+  }
+
+  /* Animated underline effect */
+  .animated-underline {
+    position: relative;
+  }
+
+  .animated-underline::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: hsl(var(--primary));
+    transition: width 0.3s ease;
+  }
+
+  .animated-underline:hover::after {
+    width: 100%;
+  }
+
+  /* Logo styling */
+  .logo-container {
+    background: linear-gradient(
+      135deg,
+      rgba(239, 68, 68, 0.15),
+      rgba(239, 68, 68, 0.05)
+    );
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+    filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.5));
+  }
+
+  .logo-image {
+    filter: brightness(1.2) contrast(1.1);
+  }
+
+  /* Price change indicators */
+  .price-up {
+    color: hsl(var(--success));
+  }
+
+  .price-down {
+    color: hsl(var(--destructive));
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--quantum-orange)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Avatar centering improvements */
+  .avatar-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar-centered img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+@layer utilities {
+  /* Transition utilities */
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  /* Color utilities */
+  .text-quantum-red {
+    color: hsl(var(--quantum-red));
+  }
+
+  .text-quantum-orange {
+    color: hsl(var(--quantum-orange));
+  }
+
+  .text-quantum-blue {
+    color: hsl(var(--quantum-blue));
+  }
+
+  .bg-quantum-red {
+    background-color: hsl(var(--quantum-red));
+  }
+
+  .bg-quantum-gray {
+    background-color: hsl(var(--quantum-gray));
+  }
+
+  .bg-quantum-black {
+    background-color: hsl(var(--quantum-black));
+  }
+
+  .border-quantum-red {
+    border-color: hsl(var(--quantum-red));
+  }
+
+  /* Gradient background utilities */
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .bg-gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  /* Animation utilities */
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  /* Selection styling */
+  .selection-quantum ::selection {
+    background: hsl(var(--quantum-red) / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  /* Responsive padding adjustments */
+  .responsive-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .responsive-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Keyframes for animations */
+@keyframes glow {
+  from {
+    box-shadow: 0 0 20px hsl(var(--quantum-red) / 0.3);
+  }
+  to {
+    box-shadow: 0 0 30px hsl(var(--quantum-red) / 0.6);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: var(--shadow-glow);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 80px hsl(var(--quantum-red) / 0.4);
+  }
+}
+
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 hsla(var(--primary), 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px hsla(var(--primary), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 hsla(var(--primary), 0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated-dots-bg {
+  background-image: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.3) 1px,
+    transparent 1px
+  );
+  background-size: 30px 30px;
+  animation: moveDots 20s linear infinite;
+  opacity: 0.4;
+}
+
+.animated-dots-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.2) 1px,
+    transparent 1px
+  );
+  background-size: 50px 50px;
+  animation: moveDots 30s linear infinite reverse;
+  opacity: 0.6;
+}
+
+.animated-dots-bg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.1) 2px,
+    transparent 2px
+  );
+  background-size: 80px 80px;
+  animation: moveDots 40s linear infinite;
+  opacity: 0.3;
+}
+
+/* Keyframe for moving dots */
+@keyframes moveDots {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(30px, 30px);
+  }
+}
+
+.text-success {
+  color: greenyellow;
+}
+.text-destructive{
+  color:red
+}
