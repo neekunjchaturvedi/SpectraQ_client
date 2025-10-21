@@ -3,7 +3,7 @@ import { ArrowLeft, Github } from "lucide-react";
 import { Button } from "@/components/ui/button"; // Example import path
 import { Input } from "@/components/ui/input"; // Example import path
 import { Label } from "@/components/ui/label"; // Example import path
-import logo from "/logo.png";
+import logo from "@/assets/logo.jpg";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
