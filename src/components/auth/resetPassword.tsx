@@ -1,28 +1,96 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, EyeOff } from "lucide-react";
 import Logo from "../common/logo";
+import useAuth from "@/hooks/useAuth";
 
 export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
+  const [localMessage, setLocalMessage] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleReset = () => {
+  const navigate = useNavigate();
+  const { token } = useParams<{ token: string }>();
+
+  const {
+    validateReset,
+    resetUserPassword,
+    loading,
+    error,
+    message,
+    clearAuthError,
+    clearAuthMessage,
+  } = useAuth();
+
+  useEffect(() => {
+    clearAuthError();
+    clearAuthMessage();
+    if (!token) {
+      navigate("/forgot-password");
+      return;
+    }
+    validateReset({ token })
+      .then(() => {})
+      .catch((err: any) => {
+        setLocalError(
+          typeof err === "string" ? err : "Invalid or expired token"
+        );
+        setTimeout(() => navigate("/forgot-password"), 1200);
+      });
+  }, [token, navigate, validateReset, clearAuthError, clearAuthMessage]);
+
+  useEffect(() => {
+    if (error) setLocalError(error);
+  }, [error]);
+
+  useEffect(() => {
+    if (message) setLocalMessage(message);
+  }, [message]);
+
+  const handleReset = async () => {
+    setLocalError(null);
+    setLocalMessage(null);
     if (!newPassword || !confirmPassword) {
-      alert("Please fill in both fields.");
+      setLocalError("Please fill in both fields.");
       return;
     }
     if (newPassword !== confirmPassword) {
-      alert("Passwords do not match.");
+      setLocalError("Passwords do not match.");
       return;
     }
-
-    console.log("Password reset to:", newPassword);
-    // Add API call here to reset password
+    if (newPassword.length < 8) {
+      setLocalError("Password must be at least 8 characters.");
+      return;
+    }
+    if (!token) {
+      setLocalError("Invalid reset token.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const action = await resetUserPassword({ token, password: newPassword });
+      const payload = (action as any).payload;
+      setLocalMessage(
+        payload?.message ||
+          "Password reset successfully. Redirecting to login..."
+      );
+      setTimeout(() => navigate("/login"), 900);
+    } catch (err: any) {
+      setLocalError(
+        typeof err === "string"
+          ? err
+          : err?.message || "Failed to reset password"
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -39,7 +107,6 @@ export default function ResetPassword() {
             Enter your new password below
           </p>
 
-          {/* New Password */}
           <div className="relative">
             <Input
               type={showNew ? "text" : "password"}
@@ -57,7 +124,6 @@ export default function ResetPassword() {
             </button>
           </div>
 
-          {/* Confirm New Password */}
           <div className="relative">
             <Input
               type={showConfirm ? "text" : "password"}
@@ -75,9 +141,23 @@ export default function ResetPassword() {
             </button>
           </div>
 
-          {/* Reset Button */}
-          <Button className="w-full bg-quantum-red text-white" onClick={handleReset}>
-            Reset Password
+          {localError && (
+            <div className="text-sm text-destructive text-center">
+              {localError}
+            </div>
+          )}
+          {!localError && localMessage && (
+            <div className="text-sm text-success text-center">
+              {localMessage}
+            </div>
+          )}
+
+          <Button
+            className="w-full bg-quantum-red text-white"
+            onClick={handleReset}
+            disabled={submitting || loading}
+          >
+            {submitting || loading ? "Resetting..." : "Reset Password"}
           </Button>
         </CardContent>
       </Card>
